@@ -20,12 +20,46 @@ imagem_chao = pygame.image.load('img/ground.png')
 chao_rolagem = 0
 chao_velocidade = 4
 
+class Passaro(pygame.sprite.Sprite):
+	def __init__(self, x, y):
+		pygame.sprite.Sprite.__init__(self)
+		self.images = []
+		self.index = 0
+		self.counter = 0
+		for num in range(1, 4):
+			img = pygame.image.load(f'img/bird{num}.png')
+			self.images.append(img)
+		self.image = self.images[self.index]
+		self.rect = self.image.get_rect()
+		self.rect.center = [x, y]
+
+	def update(self):
+		# lida com a animação
+		self.counter += 1
+		flap_cooldown = 5
+
+		if self.counter > flap_cooldown:
+			self.counter = 0
+			self.index += 1
+			if self.index >= len(self.images):
+				self.index = 0
+		self.image = self.images[self.index]
+
+grupo_passaro = pygame.sprite.Group()
+passaro = Passaro(100, int(ALTURA / 2))
+
+grupo_passaro.add(passaro)
+
 run = True
 while run:
 	clock.tick(fps)
 	
 	# imagem de fundo
 	tela.blit(imagem_fundo, (0, 0))
+
+	# passaro
+	grupo_passaro.draw(tela)
+	grupo_passaro.update()
 
 	# imagem de chão
 	tela.blit(imagem_chao, (chao_rolagem, 768))
