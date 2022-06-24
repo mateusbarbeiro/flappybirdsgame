@@ -1,5 +1,5 @@
+from objeto import Objeto
 import random
-
 import pygame
 
 pygame.init()
@@ -48,16 +48,19 @@ def reiniciar_jogo():
     pontuacao = 0
     return pontuacao
 
-
-class Passaro(pygame.sprite.Sprite):
+class Passaro(Objeto):
     def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self)
         self.images = []
-        self.index = 0
-        self.counter = 0
         for num in range(1, 4):
             img = pygame.image.load(f'img/bird{num}.png')
             self.images.append(img)
+
+
+        pygame.sprite.Sprite.__init__(self)
+        
+        self.index = 0
+        self.counter = 0
+        
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = [x, y]
@@ -99,7 +102,7 @@ class Passaro(pygame.sprite.Sprite):
             self.image = pygame.transform.rotate(self.images[self.index], -90)
 
 
-class Cano(pygame.sprite.Sprite):
+class Cano(Objeto):
     def __init__(self, x, y, posicao):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('img/pipe.png')
