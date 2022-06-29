@@ -1,13 +1,14 @@
-from main import pygame
+from pygame import mouse, transform, sprite, image
 
-class Passaro(pygame.sprite.Sprite):
+
+class Passaro(sprite.Sprite):
     def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self)
+        sprite.Sprite.__init__(self)
         self.images = []
         self.index = 0
         self.counter = 0
         for num in range(1, 4):
-            img = pygame.image.load(f'img/bird{num}.png')
+            img = image.load(f'img/bird{num}.png')
             self.images.append(img)
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
@@ -15,7 +16,7 @@ class Passaro(pygame.sprite.Sprite):
         self.vel = 0
         self.clicked = False
 
-    def update(self):
+    def update(self, voar, game_over):
 
         if voar:
             # gravidade
@@ -27,10 +28,10 @@ class Passaro(pygame.sprite.Sprite):
 
         if not game_over:
             # pular
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+            if mouse.get_pressed()[0] == 1 and self.clicked == False:
                 self.clicked = True
                 self.vel = -10
-            if pygame.mouse.get_pressed()[0] == 0:
+            if mouse.get_pressed()[0] == 0:
                 self.clicked = False
 
             # lida com a animação
@@ -45,6 +46,6 @@ class Passaro(pygame.sprite.Sprite):
             self.image = self.images[self.index]
 
             # rotacionar o pássaro
-            self.image = pygame.transform.rotate(self.images[self.index], self.vel * -3)
+            self.image = transform.rotate(self.images[self.index], self.vel * -3)
         else:
-            self.image = pygame.transform.rotate(self.images[self.index], -90)
+            self.image = transform.rotate(self.images[self.index], -90)
