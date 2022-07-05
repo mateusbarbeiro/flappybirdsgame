@@ -14,6 +14,3 @@ class Moeda(Objeto):
         self.rect.x -= chao_velocidade
         if self.rect.right < 0:
             self.kill()
-        
-        
-    

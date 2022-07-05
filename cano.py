@@ -1,3 +1,4 @@
+from moeda import Moeda
 from objeto import Objeto
 from pygame import sprite, image, transform
 

@@ -1,7 +1,9 @@
 from pygame import mouse, transform, sprite, image
 
+from objeto import Objeto
 
-class Passaro(sprite.Sprite):
+
+class Passaro(Objeto):
     def __init__(self, x, y):
         sprite.Sprite.__init__(self)
         self.images = []
@@ -16,36 +18,36 @@ class Passaro(sprite.Sprite):
         self.vel = 0
         self.clicked = False
 
-    def update(self, voar, game_over):
+    def aplicarGravidade(self):
+        # gravidade
+        self.vel += 0.5  # sensibilidade de bater asas
+        if self.vel > 8:
+            self.vel = 8
+        if self.rect.bottom < 768:
+            self.rect.y += int(self.vel)
 
-        if voar:
-            # gravidade
-            self.vel += 0.5  # sensibilidade de bater asas
-            if self.vel > 8:
-                self.vel = 8
-            if self.rect.bottom < 768:
-                self.rect.y += int(self.vel)
+    def detectarPulo(self):
+        # pular
+        if mouse.get_pressed()[0] == 1 and self.clicked == False:
+            self.clicked = True
+            self.vel = -10
+        if mouse.get_pressed()[0] == 0:
+            self.clicked = False
 
-        if not game_over:
-            # pular
-            if mouse.get_pressed()[0] == 1 and self.clicked == False:
-                self.clicked = True
-                self.vel = -10
-            if mouse.get_pressed()[0] == 0:
-                self.clicked = False
+    def animarPulo(self):
+        # lida com a animação
+        self.counter += 1
+        flap_cooldown = 5
 
-            # lida com a animação
-            self.counter += 1
-            flap_cooldown = 5
+        if self.counter > flap_cooldown:
+            self.counter = 0
+            self.index += 1
+            if self.index >= len(self.images):
+                self.index = 0
+        self.image = self.images[self.index]
 
-            if self.counter > flap_cooldown:
-                self.counter = 0
-                self.index += 1
-                if self.index >= len(self.images):
-                    self.index = 0
-            self.image = self.images[self.index]
+        # rotacionar o pássaro
+        self.image = transform.rotate(self.images[self.index], self.vel * -3)
 
-            # rotacionar o pássaro
-            self.image = transform.rotate(self.images[self.index], self.vel * -3)
-        else:
-            self.image = transform.rotate(self.images[self.index], -90)
+    def rotacionarPassadoMorrer(self):
+        self.image = transform.rotate(self.images[self.index], -90)

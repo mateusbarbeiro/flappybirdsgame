@@ -1,7 +1,7 @@
-import pygame
+from pygame import sprite
 
 
-class Objeto(pygame.sprite.Sprite):
+class Objeto(sprite.Sprite):
     def __init__(self, image="", vel=0, x=0, y=0, rect=""):
         self.image = image
         self.x = x
@@ -9,5 +9,3 @@ class Objeto(pygame.sprite.Sprite):
         self.vel = vel
         self.rect = rect
 
-    def renderiza(self, tela):
-        tela.blit(self.image, self.rect)
