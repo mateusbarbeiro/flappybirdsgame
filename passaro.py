@@ -27,11 +27,18 @@ class Passaro(Objeto):
             self.rect.y += int(self.vel)
 
     def detectarPulo(self):
-        # pular
-        if mouse.get_pressed()[0] == 1 and self.clicked == False:
+        left, middle, right = mouse.get_pressed()
+        
+        if left:
+            self.clicked = True
+            self.vel = -5
+        elif right:
             self.clicked = True
             self.vel = -10
-        if mouse.get_pressed()[0] == 0:
+        elif middle:
+            self.clicked = True
+            self.vel = +100
+        else:
             self.clicked = False
 
     def animarPulo(self):

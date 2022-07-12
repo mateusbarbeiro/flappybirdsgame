@@ -109,7 +109,7 @@ class Game:
                 self.game_over = True
 
             if pygame.sprite.groupcollide(self.grupo_passaro, self.grupo_moeda, False, True):
-                self.pontuacao = int(self.pontuacao * 1.25)
+                self.pontuacao += 10
 
             # verificar se o pássaro atingiu o solo
             if self.passaro.rect.bottom >= 768:

@@ -8,7 +8,7 @@ class Cano(Objeto):
         sprite.Sprite.__init__(self)
         self.image = image.load('img/pipe.png')
         self.rect = self.image.get_rect()
-        self.espacamento_cano = 150
+        self.espacamento_cano = 200
         # posição 1 é de cima, -1 é a posição de baixo
         if posicao == 1:
             self.image = transform.flip(self.image, False, True)
