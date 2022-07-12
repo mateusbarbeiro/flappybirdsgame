@@ -15,8 +15,10 @@ class Game:
         self.clock = pygame.time.Clock()
         self.fps = 60
 
-        self.LARGURA = 864
-        self.ALTURA = 936
+        self.LARGURA = 800
+        self.ALTURA = 760
+		# self.LARGURA = 864
+        # self.ALTURA = 936
 
         self.tela = pygame.display.set_mode((self.LARGURA, self.ALTURA))
         pygame.display.set_caption('Flappy Bird')
@@ -29,7 +31,12 @@ class Game:
 
         # carrega imagens
         self.imagem_fundo = pygame.image.load('img/bg.png')
+		# (864, 768)
+        self.imagem_fundo = pygame.transform.scale(self.imagem_fundo, (800, 704))
+		
         self.imagem_chao = pygame.image.load('img/ground.png')
+		# (900, 168)
+        self.imagem_chao = pygame.transform.scale(self.imagem_chao, (836, 104))
         self.imagem_botao = pygame.image.load('img/restart.png')
 
         # variáveis do jogo
@@ -88,7 +95,7 @@ class Game:
             self.grupo_moeda.draw(self.tela)
 
             # desenhando o chão
-            self.tela.blit(self.imagem_chao, (self.chao_rolagem, 768))
+            self.tela.blit(self.imagem_chao, (self.chao_rolagem, 704))
 
             # verificar pontuação
             if len(self.grupo_cano) > 0:
