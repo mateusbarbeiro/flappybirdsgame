@@ -16,6 +16,8 @@ class Cano(Objeto):
         if posicao == -1:
             self.rect.topleft = [x, y + int(self.espacamento_cano / 2)]
 
+        self.passou = False
+
     def update(self, chao_velocidade):
         self.rect.x -= chao_velocidade
         if self.rect.right < 0:
