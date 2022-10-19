@@ -1,6 +1,5 @@
 import random
 import pygame
-from pygame import transform
 
 from passaro import Passaro
 from botao import Botao
@@ -17,7 +16,7 @@ class Game:
 
         self.LARGURA = 800
         self.ALTURA = 760
-		# self.LARGURA = 864
+        # self.LARGURA = 864
         # self.ALTURA = 936
 
         self.tela = pygame.display.set_mode((self.LARGURA, self.ALTURA))
@@ -31,11 +30,11 @@ class Game:
 
         # carrega imagens
         self.imagem_fundo = pygame.image.load('img/bg.png')
-		# (864, 768)
+        # (864, 768)
         self.imagem_fundo = pygame.transform.scale(self.imagem_fundo, (800, 704))
-		
+
         self.imagem_chao = pygame.image.load('img/ground.png')
-		# (900, 168)
+        # (900, 168)
         self.imagem_chao = pygame.transform.scale(self.imagem_chao, (836, 104))
         self.imagem_botao = pygame.image.load('img/restart.png')
         self.imagem_botao_iniciar = pygame.image.load('img/start.png')
@@ -58,14 +57,13 @@ class Game:
 
         self.grupo_passaro.add(self.passaro)
 
-        self.recordes_file = open("recordes.txt" ,"r")
+        self.recordes_file = open("recordes.txt", "r")
         self.recordes = []
         self.fonte_recordes = pygame.font.SysFont('Comic Sans', 30)
         self.ler_recordes()
         self.salvar_recorde_lista = True
 
         self.cor_padrao = (225, 97, 25)
-
 
     def texto(self, text, font, text_col, x, y):
         img = font.render(text, True, text_col)
@@ -79,7 +77,6 @@ class Game:
         self.pontuacao = 0
         self.game_over = False
         self.salvar_recorde_lista = True
-            
 
     def ler_recordes(self):
         for recorde in self.recordes_file.readlines():
@@ -92,10 +89,9 @@ class Game:
         self.recordes_file = open("recordes.txt", "w")
 
         for y in range(0, 10 if len(self.recordes) > 10 else len(self.recordes)):
-            self.recordes_file.write(str(self.recordes[y])+'\n')
+            self.recordes_file.write(str(self.recordes[y]) + '\n')
 
         self.recordes_file.close()
-
 
     def menu(self):
         botao = Botao(self.LARGURA // 2 - 50, self.ALTURA // 4, self.imagem_botao_iniciar)
@@ -104,19 +100,22 @@ class Game:
             self.clock.tick(self.fps)
             self.tela.blit(self.imagem_fundo, (0, 0))
             self.tela.blit(self.imagem_chao, (self.chao_rolagem, 704))
-        
-            pygame.draw.rect(self.tela, self.cor_padrao, (self.LARGURA / 1.4, self.ALTURA / 3.2, 300, 400), border_radius=5)
-            pygame.draw.rect(self.tela, self.branco, (self.LARGURA / 1.4, self.ALTURA / 3.2, 300, 400), width=5, border_radius=5)
+
+            pygame.draw.rect(self.tela, self.cor_padrao, (self.LARGURA / 1.4, self.ALTURA / 3.2, 300, 400),
+                             border_radius=5)
+            pygame.draw.rect(self.tela, self.branco, (self.LARGURA / 1.4, self.ALTURA / 3.2, 300, 400), width=5,
+                             border_radius=5)
 
             pygame.draw.rect(self.tela, self.cor_padrao, (self.LARGURA / 4.8, 20, 500, 100), border_radius=5)
             pygame.draw.rect(self.tela, self.branco, (self.LARGURA / 4.8, 20, 500, 100), width=5, border_radius=5)
 
-            self.texto("Flappy Bird", self.fonte, self.branco, int(self.LARGURA / 2)-150, 20)
+            self.texto("Flappy Bird", self.fonte, self.branco, int(self.LARGURA / 2) - 150, 20)
 
-            self.texto("Recordes", self.fonte_recordes, self.branco, int(self.LARGURA / 1.2)-50, 250)
+            self.texto("Recordes", self.fonte_recordes, self.branco, int(self.LARGURA / 1.2) - 50, 250)
 
             for pos, recorde in enumerate(self.recordes):
-                self.texto(f"{pos+1}. {recorde}", self.fonte_recordes, self.branco, int(self.LARGURA / 1.15)-50, 300 + (30*pos))
+                self.texto(f"{pos + 1}. {recorde}", self.fonte_recordes, self.branco, int(self.LARGURA / 1.15) - 50,
+                           300 + (30 * pos))
 
             self.grupo_passaro.draw(self.tela)
             self.passaro.animarPulo()
@@ -128,15 +127,13 @@ class Game:
                 if evento.type == pygame.QUIT:
                     self.salvar_recordes()
                     pygame.quit()
-                    
+
             pygame.display.update()
 
         self.reiniciar_jogo()
         self.start_game()
 
-
     def start_game(self):
-
         # criando instancia do botão
         botao = Botao(self.LARGURA // 2 - 50, self.ALTURA // 2 - 100, self.imagem_botao)
 
@@ -185,7 +182,7 @@ class Game:
                 self.game_over = True
 
             if pygame.sprite.groupcollide(self.grupo_passaro, self.grupo_moeda, False, True):
-                self.pontuacao += 1
+                self.pontuacao += 5
 
             # verificar se o pássaro 
             # atingiu o solo
