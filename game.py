@@ -188,7 +188,7 @@ class Game:
             # atingiu o solo
             if self.passaro.rect.bottom >= 768:
                 self.game_over = True
-                voar = False
+                self.voar = False
 
             if not self.game_over and self.voar == True:
 
